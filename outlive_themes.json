@@ -1,0 +1,131 @@
+{
+  "brand": "Outlive",
+  "localeButtonLabel": "English",
+  "hero": {
+    "title": "We are Team Graceful Ageing",
+    "description": "We are on a mission to make Graceful Ageing a reality for everyone. We would like to help us start this journey. Select from a variety of themes we have curated. Click any card to preview the theme and subthemes, you can choose multiple options, and continue to the survey."
+  },
+  "themes": [
+    {
+      "id": "vital-living-longevity",
+      "order": 1,
+      "title": "Vital Living & Longevity",
+      "ariaLabel": "Vital Living & Longevity",
+      "card": {
+        "image": "https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=800&q=80",
+        "alt": "Healthy lifestyle – fruits and active living",
+        "description": "A lifestyle of healthy habits that sustain energy, joy, and long life."
+      },
+      "modal": {
+        "image": "https://images.unsplash.com/photo-1506806732259-39c2d0268443?auto=format&fit=crop&w=1200&q=80",
+        "subthemes": [
+          "Movement as Medicine: gardening, cleaning, daily chores, gentle fitness",
+          "Food and Nourishment: plant-based eating, 80% full, anti-inflammatory foods",
+          "Alcohol/Softdrinks: nuanced discussion of moderation and wellbeing",
+          "Downshifting: slowing down, simplifying life, reducing stress"
+        ]
+      }
+    },
+    {
+      "id": "inner-journey-life-transitions",
+      "order": 2,
+      "title": "The Inner Journey & Life Transitions",
+      "ariaLabel": "The Inner Journey & Life Transitions",
+      "card": {
+        "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80",
+        "alt": "Meditation and self-reflection",
+        "description": "Emotional, psychological, and spiritual shifts that shape us through life."
+      },
+      "modal": {
+        "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80",
+        "subthemes": [
+          "Hormonal Changes and Menopause: pre/meno/post menopause, physical/mental changes",
+          "Loss & Rediscovery of Identity: self-esteem, purpose, acceptance, empty nesters",
+          "Personal Boundaries & Limits: managing influence, setting limits, saying yes/no",
+          "Soul, Purpose & Longing: meaning-making, inner beauty, desires without boundaries",
+          "Desires in life: what excites you, what keeps you awake at night"
+        ]
+      }
+    },
+    {
+      "id": "relationships-belonging",
+      "order": 3,
+      "title": "Relationships & Belonging",
+      "ariaLabel": "Relationships & Belonging",
+      "card": {
+        "image": "https://images.unsplash.com/photo-1504151932400-72d4384f04b3?auto=format&fit=crop&w=800&q=80",
+        "alt": "Family walking together outdoors, symbolizing safety and belonging",
+        "description": "The changing role of relationships and community throughout life."
+      },
+      "modal": {
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80",
+        "subthemes": [
+          "Family & Friends: friends as family, extended family, kids, partner",
+          "Tribe & Community: social circle, right tribe, belonging",
+          "Sisterhood: shared experience, emotional support, women supporting women",
+          "Changes in Relationships: changes with self, friends, partner, work",
+          "Loneliness & Connection: Internally, externally"
+        ]
+      }
+    },
+    {
+      "id": "resilience-daily-mastery",
+      "order": 4,
+      "title": "Resilience & Daily Mastery",
+      "ariaLabel": "Resilience & Daily Mastery",
+      "card": {
+        "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80",
+        "alt": "Tree growing strong in a harsh environment, symbolizing resilience",
+        "description": "Practical skills to navigate daily life with intention and confidence."
+      },
+      "modal": {
+        "image": "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80",
+        "subthemes": [
+          "Financial Health: planning, independence, navigating changes",
+          "Work & Purpose: meaning of work, shifting values, staying engaged",
+          "Managing Daily Life: routines, wellbeing now and in the future",
+          "Managing Change, Embracing Limits: adapting to change, mindset"
+        ]
+      }
+    },
+    {
+      "id": "safety-and-security",
+      "order": 5,
+      "title": "Safety and Security",
+      "ariaLabel": "Safety and Security",
+      "card": {
+        "image": "https://images.unsplash.com/photo-1504151932400-72d4384f04b3?auto=format&fit=crop&w=800&q=80",
+        "alt": "Family walking together outdoors, symbolizing safety and belonging",
+        "description": "Creating safety that nurtures trust, freedom, and peace of mind."
+      },
+      "modal": {
+        "image": "https://images.unsplash.com/photo-1504151932400-72d4384f04b3?auto=format&fit=crop&w=1200&q=80",
+        "subthemes": [
+          "Emotional Safety & Vulnerability (especially for topics like illness, menopause, end-of-life)",
+          "Physical Safety: walking alone outside/in darkness, daily chores in society (bank/post/shopping), self defence, unexpected visitors",
+          "IT Security: frauds, whom and what to trust, spam, knowledge"
+        ]
+      }
+    },
+    {
+      "id": "legacy-mortality-future-planning",
+      "order": 6,
+      "title": "Legacy, Mortality & Future Planning",
+      "ariaLabel": "Legacy, Mortality & Future Planning",
+      "card": {
+        "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
+        "alt": "Sunset and symbolic future planning",
+        "description": "Creating peace of mind through intentional choices for the future."
+      },
+      "modal": {
+        "image": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+        "subthemes": [
+          "End-of-Life Desires: funeral wishes, music, setting, atmosphere",
+          "Footprints & Legacy: how you want to be remembered",
+          "Care & Contingency Plans: illness, accidents, caregiving preferences",
+          "Legal & Ethical Considerations: will, organ donation, body disposition"
+        ]
+      }
+    }
+  ]
+}
