@@ -243,10 +243,48 @@
     <!-- Step 2: Summary -->
     <section id="step2" class="section hidden">
         <div class="container">
-            <h2 class="heading_h2">Your Selected Themes</h2>
-            <ul id="selectedList"></ul>
+            <div class="header is-align-center">
+                <h2 class="heading_h2">Tell us about yourself</h2>
+                <p class="paragraph_large margin-bottom_none">Please provide your information to continue with your selected themes.</p>
+            </div>
+            
+            <div class="form-container">
+                <form id="userForm" class="user-form">
+                    <div class="form-group">
+                        <label for="userName" class="form-label">Full Name *</label>
+                        <input type="text" id="userName" name="userName" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userEmail" class="form-label">Email Address *</label>
+                        <input type="email" id="userEmail" name="userEmail" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userPhone" class="form-label">Phone Number *</label>
+                        <input type="tel" id="userPhone" name="userPhone" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userAge" class="form-label">Age *</label>
+                        <input type="number" id="userAge" name="userAge" class="form-input" min="18" max="120" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userComments" class="form-label">Additional Comments</label>
+                        <textarea id="userComments" name="userComments" class="form-textarea" rows="4" placeholder="Tell us anything else you'd like us to know..."></textarea>
+                    </div>
+                    
+                    <div class="selected-themes-summary">
+                        <h3 class="heading_h4">Your Selected Themes:</h3>
+                        <ul id="selectedList" class="selected-themes-list"></ul>
+                    </div>
+                </form>
+            </div>
+            
             <div class="continue-wrapper">
                 <button id="backBtn" class="continue-btn">← Back</button>
+                <button id="submitBtn" class="continue-btn primary" type="submit" form="userForm">Submit</button>
             </div>
         </div>
     </section>
@@ -413,7 +451,7 @@
                 step1.classList.add('hidden');
                 step2.classList.remove('hidden');
 
-                // If you have a styled summary, populate it here. For now, a simple list:
+                // Populate selected themes in the form summary
                 if (selectedList) {
                     selectedList.innerHTML = '';
                     themes.forEach(t => {
@@ -422,7 +460,9 @@
                         selectedList.appendChild(li);
                     });
                 }
-                // If you need the data later: window.selectedThemes = themes;
+                
+                // Store selected themes for later use
+                window.selectedThemes = themes;
             });
 
             // Optional: Back button logic (if present)
@@ -431,6 +471,36 @@
                 backBtn.addEventListener('click', () => {
                     step2.classList.add('hidden');
                     step1.classList.remove('hidden');
+                });
+            }
+            
+            // Form submission logic
+            const submitBtn = document.getElementById('submitBtn');
+            const userForm = document.getElementById('userForm');
+            
+            if (userForm && submitBtn) {
+                userForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    // Collect form data
+                    const formData = new FormData(userForm);
+                    const userData = {
+                        name: formData.get('userName'),
+                        email: formData.get('userEmail'),
+                        phone: formData.get('userPhone'),
+                        age: formData.get('userAge'),
+                        comments: formData.get('userComments'),
+                        selectedThemes: window.selectedThemes || []
+                    };
+                    
+                    // Here you would typically send the data to your server
+                    console.log('User data collected:', userData);
+                    
+                    // Show success message (you can customize this)
+                    alert('Thank you! Your information has been submitted successfully.');
+                    
+                    // Optional: Reset form or redirect
+                    // userForm.reset();
                 });
             }
 
