@@ -249,31 +249,37 @@
             </div>
             
             <div class="form-container">
-                <form id="userForm" class="user-form">
+                <form id="userForm" class="user-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
                     <div class="form-group">
                         <label for="userName" class="form-label">Full Name *</label>
-                        <input type="text" id="userName" name="userName" class="form-input" required>
+                        <input type="text" id="userName" name="name" class="form-input" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="userEmail" class="form-label">Email Address *</label>
-                        <input type="email" id="userEmail" name="userEmail" class="form-input" required>
+                        <input type="email" id="userEmail" name="email" class="form-input" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="userPhone" class="form-label">Phone Number *</label>
-                        <input type="tel" id="userPhone" name="userPhone" class="form-input" required>
+                        <input type="tel" id="userPhone" name="phone" class="form-input" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="userAge" class="form-label">Age *</label>
-                        <input type="number" id="userAge" name="userAge" class="form-input" min="18" max="120" required>
+                        <input type="number" id="userAge" name="age" class="form-input" min="18" max="120" required>
                     </div>
                     
                     <div class="form-group">
                         <label for="userComments" class="form-label">Additional Comments</label>
-                        <textarea id="userComments" name="userComments" class="form-textarea" rows="4" placeholder="Tell us anything else you'd like us to know..."></textarea>
+                        <textarea id="userComments" name="comments" class="form-textarea" rows="4" placeholder="Tell us anything else you'd like us to know..."></textarea>
                     </div>
+                    
+                    <!-- Hidden field to include selected themes -->
+                    <input type="hidden" id="selectedThemesInput" name="selected_themes" value="">
+                    
+                    <!-- Honeypot field for spam protection -->
+                    <input type="text" name="_gotcha" style="display:none">
                     
                     <div class="selected-themes-summary">
                         <h3 class="heading_h4">Your Selected Themes:</h3>
@@ -482,30 +488,86 @@
             // Form submission logic
             const submitBtn = document.getElementById('submitBtn');
             const userForm = document.getElementById('userForm');
+            const selectedThemesInput = document.getElementById('selectedThemesInput');
             
             if (userForm && submitBtn) {
                 userForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
+                    // Update hidden field with selected themes before submission
+                    const themes = window.selectedThemes || [];
+                    selectedThemesInput.value = themes.join(', ');
                     
-                    // Collect form data
-                    const formData = new FormData(userForm);
-                    const userData = {
-                        name: formData.get('userName'),
-                        email: formData.get('userEmail'),
-                        phone: formData.get('userPhone'),
-                        age: formData.get('userAge'),
-                        comments: formData.get('userComments'),
-                        selectedThemes: window.selectedThemes || []
-                    };
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Sending...';
                     
-                    // Here you would typically send the data to your server
-                    console.log('User data collected:', userData);
+                    // Remove any existing status messages
+                    const existingStatus = document.querySelector('.form-status');
+                    if (existingStatus) {
+                        existingStatus.remove();
+                    }
                     
-                    // Show success message (you can customize this)
-                    alert('Thank you! Your information has been submitted successfully.');
+                    // Let the form submit naturally to Formspree
+                    // The page will redirect or show Formspree's thank you page
+                });
+                
+                // Handle form response (if staying on same page)
+                window.addEventListener('load', () => {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.get('success') === 'true') {
+                        showFormStatus('Thank you! Your information has been submitted successfully. We\'ll be in touch soon!', 'success');
+                        
+                        // Reset form and return to step 1 after a delay
+                        setTimeout(() => {
+                            userForm.reset();
+                            step2.classList.add('hidden');
+                            step1.classList.remove('hidden');
+                            
+                            // Clear selections
+                            document.querySelectorAll('.theme-checkbox').forEach(cb => {
+                                cb.checked = false;
+                                cb.closest('.card').classList.remove('selected');
+                            });
+                            window.selectedThemes = [];
+                            updateContinueState();
+                        }, 3000);
+                    }
+                });
+            }
+            
+            function showFormStatus(message, type) {
+                const statusDiv = document.createElement('div');
+                statusDiv.className = `form-status ${type}`;
+                statusDiv.textContent = message;
+                
+                const formContainer = document.querySelector('.form-container');
+                formContainer.appendChild(statusDiv);
+                
+                // Re-enable submit button
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Submit';
+                }
+            }
+            
+            // Handle form errors
+            userForm.addEventListener('error', () => {
+                showFormStatus('There was an error submitting your form. Please try again.', 'error');
+            });
+            
+            // Reset button state if user goes back
+            const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                backBtn.addEventListener('click', () => {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit';
+                    }
                     
-                    // Optional: Reset form or redirect
-                    // userForm.reset();
+                    // Remove status messages
+                    const existingStatus = document.querySelector('.form-status');
+                    if (existingStatus) {
+                        existingStatus.remove();
+                    }
                 });
             }
 
