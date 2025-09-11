@@ -409,33 +409,15 @@
 
     <script>
         (function () {
-            // Toggle selection when clicking the whole card (but don't navigate)
-            document.querySelectorAll('.carousel_slide.card').forEach(card => {
-                card.addEventListener('click', (e) => {
-                    // If the click was on the checkbox itself, let it do its thing
-                    if (e.target.closest('.theme-checkbox')) return;
-                    e.preventDefault();
-                    const cb = card.querySelector('.theme-checkbox');
-                    cb.checked = !cb.checked;
-                    card.classList.toggle('selected', cb.checked);
-                    updateContinueState();
-                });
-            });
-
-            // Keep .selected class in sync when user clicks just the checkbox
-            document.querySelectorAll('.theme-checkbox').forEach(cb => {
-                cb.addEventListener('change', (e) => {
-                    const card = e.target.closest('.card');
-                    card.classList.toggle('selected', e.target.checked);
-                    updateContinueState();
-                });
-            });
-
-            // Continue button → gather checked themes
+            // Theme selection functionality
             const continueBtn = document.getElementById('continueBtn');
             const selectedList = document.getElementById('selectedList');
             const step1 = document.getElementById('step1');
             const step2 = document.getElementById('step2');
+            const backBtn = document.getElementById('backBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const userForm = document.getElementById('userForm');
+            const selectedThemesInput = document.getElementById('selectedThemesInput');
 
             function getSelectedThemes() {
                 return Array.from(document.querySelectorAll('.theme-checkbox:checked'))
@@ -449,11 +431,37 @@
                 continueBtn.style.cursor = hasAny ? 'pointer' : 'not-allowed';
             }
 
+            // Toggle selection when clicking the whole card
+            document.querySelectorAll('.carousel_slide.card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Don't toggle if clicking on checkbox or more details button
+                    if (e.target.closest('.theme-checkbox') || e.target.closest('.more-btn')) {
+                        return;
+                    }
+                    
+                    e.preventDefault();
+                    const cb = card.querySelector('.theme-checkbox');
+                    cb.checked = !cb.checked;
+                    card.classList.toggle('selected', cb.checked);
+                    updateContinueState();
+                });
+            });
+
+            // Keep .selected class in sync when user clicks checkbox directly
+            document.querySelectorAll('.theme-checkbox').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    const card = e.target.closest('.card');
+                    card.classList.toggle('selected', e.target.checked);
+                    updateContinueState();
+                });
+            });
+
+            // Continue button functionality
             continueBtn.addEventListener('click', () => {
                 const themes = getSelectedThemes();
-                if (themes.length === 0) return; // guard
+                if (themes.length === 0) return;
 
-                // Show step 2 summary
+                // Show step 2
                 step1.classList.add('hidden');
                 step2.classList.remove('hidden');
 
@@ -467,24 +475,31 @@
                     });
                 }
                 
-                // Store selected themes for later use
+                // Store selected themes for form submission
                 window.selectedThemes = themes;
             });
 
-            // Optional: Back button logic (if present)
-            const backBtn = document.getElementById('backBtn');
+            // Back button functionality
             if (backBtn) {
                 backBtn.addEventListener('click', () => {
                     step2.classList.add('hidden');
                     step1.classList.remove('hidden');
+                    
+                    // Reset submit button state
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit';
+                    }
+                    
+                    // Remove status messages
+                    const existingStatus = document.querySelector('.form-status');
+                    if (existingStatus) {
+                        existingStatus.remove();
+                    }
                 });
             }
             
             // Form submission logic
-            const submitBtn = document.getElementById('submitBtn');
-            const userForm = document.getElementById('userForm');
-            const selectedThemesInput = document.getElementById('selectedThemesInput');
-            
             if (userForm && submitBtn) {
                 userForm.addEventListener('submit', (e) => {
                     // Update hidden field with selected themes before submission
@@ -500,12 +515,9 @@
                     if (existingStatus) {
                         existingStatus.remove();
                     }
-                    
-                    // Let the form submit naturally to Formspree
-                    // The page will redirect or show Formspree's thank you page
                 });
                 
-                // Handle form response (if staying on same page)
+                // Handle successful form submission
                 window.addEventListener('load', () => {
                     const urlParams = new URLSearchParams(window.location.search);
                     if (urlParams.get('success') === 'true') {
@@ -535,7 +547,9 @@
                 statusDiv.textContent = message;
                 
                 const formContainer = document.querySelector('.form-container');
-                formContainer.appendChild(statusDiv);
+                if (formContainer) {
+                    formContainer.appendChild(statusDiv);
+                }
                 
                 // Re-enable submit button
                 if (submitBtn) {
@@ -545,114 +559,16 @@
             }
             
             // Handle form errors
-            userForm.addEventListener('error', () => {
-                showFormStatus('There was an error submitting your form. Please try again.', 'error');
-            });
-            
-            // Reset button state if user goes back
-            const backBtn = document.getElementById('backBtn');
-            if (backBtn) {
-                backBtn.addEventListener('click', () => {
-                    if (submitBtn) {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'Submit';
-                    }
-                    
-                    // Remove status messages
-                    const existingStatus = document.querySelector('.form-status');
-                    if (existingStatus) {
-                        existingStatus.remove();
-                    }
+            if (userForm) {
+                userForm.addEventListener('error', () => {
+                    showFormStatus('There was an error submitting your form. Please try again.', 'error');
                 });
             }
 
             // Initialize the Continue button state
             updateContinueState();
         })();
-        (function () {
-            // --- Carousel logic (your existing code) ---
-            const root = document.querySelector('[data-carousel]');
-            if (!root) return;
-            const track = root.querySelector('[data-track]');
-            const btnPrev = root.querySelector('[data-prev]');
-            const btnNext = root.querySelector('[data-next]');
-            const dotsWrap = root.querySelector('[data-dots]');
-            const slides = Array.from(track.children);
-
-            slides.forEach((_, i) => {
-                const dot = document.createElement('button');
-                dot.className = 'carousel_dot';
-                dot.type = 'button';
-                dot.setAttribute('role', 'tab');
-                dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-                dot.addEventListener('click', () => {
-                    const x = slides[i].offsetLeft - track.offsetLeft;
-                    track.scrollTo({ left: x, behavior: 'smooth' });
-                });
-                dotsWrap.appendChild(dot);
-            });
-            const dots = Array.from(dotsWrap.children);
-
-            function update() {
-                const trackRect = track.getBoundingClientRect();
-                let best = { i: 0, vis: -Infinity };
-                slides.forEach((slide, i) => {
-                    const r = slide.getBoundingClientRect();
-                    const overlap = Math.min(trackRect.right, r.right) - Math.max(trackRect.left, r.left);
-                    if (overlap > best.vis) best = { i, vis: overlap };
-                });
-                dots.forEach((d, i) => d.setAttribute('aria-current', i === best.i ? 'true' : 'false'));
-                btnPrev.disabled = track.scrollLeft <= 0;
-                btnNext.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 1;
-            }
-            function scrollByPage(dir) {
-                track.scrollBy({ left: dir * track.clientWidth * 0.9, behavior: 'smooth' });
-            }
-            btnPrev.addEventListener('click', () => scrollByPage(-1));
-            btnNext.addEventListener('click', () => scrollByPage(1));
-            track.addEventListener('scroll', () => requestAnimationFrame(update));
-            window.addEventListener('resize', update);
-            update();
-
-            // --- Selection + Navigation ---
-            const selectedThemes = new Set();
-            slides.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const title = card.querySelector('h3').textContent.trim();
-                    card.classList.toggle('selected');
-                    if (selectedThemes.has(title)) {
-                        selectedThemes.delete(title);
-                    } else {
-                        selectedThemes.add(title);
-                    }
-                });
-            });
-
-            const continueBtn = document.getElementById('continueBtn');
-            const backBtn = document.getElementById('backBtn');
-            const selectedList = document.getElementById('selectedList');
-
-            continueBtn.addEventListener('click', () => {
-                if (selectedThemes.size === 0) {
-                    alert("Please select at least one theme!");
-                    return;
-                }
-                document.getElementById('step1').classList.add('hidden');
-                document.getElementById('step2').classList.remove('hidden');
-                selectedList.innerHTML = '';
-                selectedThemes.forEach(theme => {
-                    const li = document.createElement('li');
-                    li.textContent = theme;
-                    selectedList.appendChild(li);
-                });
-            });
-
-            backBtn.addEventListener('click', () => {
-                document.getElementById('step2').classList.add('hidden');
-                document.getElementById('step1').classList.remove('hidden');
-            });
-        })(); </script>
+    </script>
 
     <!-- Optional: keep Webflow scripts if needed elsewhere -->
     <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js"
