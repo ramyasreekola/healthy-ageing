@@ -19,6 +19,7 @@
 
 
 <body>
+    <div class="main-container">
     <div class="nav">
         <div class="nav_container" role="banner">
             <div class="nav_left"><a href="#" class="nav_logo w-inline-block">
@@ -296,6 +297,7 @@
             </div>
         </div>
     </section>
+</div>
     <script>
         (function () {
             // Map theme titles to details used in the modal
@@ -416,10 +418,6 @@
             const selectedList = document.getElementById('selectedList');
             const step1 = document.getElementById('step1');
             const step2 = document.getElementById('step2');
-            const backBtn = document.getElementById('backBtn');
-            const submitBtn = document.getElementById('submitBtn');
-            const userForm = document.getElementById('userForm');
-            const selectedThemesInput = document.getElementById('selectedThemesInput');
 
             function getSelectedThemes() {
                 return Array.from(document.querySelectorAll('.theme-checkbox:checked'))
