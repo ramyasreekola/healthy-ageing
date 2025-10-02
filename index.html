@@ -51,9 +51,9 @@
         <div class="container">
             <div class="header is-align-center">
                 <div class="eyebrow">Browse theme options</div>
-                <h2 class="heading_h2">Choose your style, your way</h2>
-                <p class="paragraph_large margin-bottom_none">Select from a range of theme cards. Click to view details,
-                    check your favorites, and continue to the next step.</p>
+                <h2 class="heading_h2">Your Voice, Our Vision: A Study on Healthy Aging</h2>
+                <p class="paragraph_large margin-bottom_none">Join our study to share your valuable insights and help us
+                    create projects that truly matter.</p>
             </div>
 
             <div class="carousel_track" data-track>
@@ -245,52 +245,54 @@
         <div class="container">
             <div class="header is-align-center">
                 <h2 class="heading_h2">Tell us about yourself</h2>
-                <p class="paragraph_large margin-bottom_none">Please provide your information to continue with your selected themes.</p>
+                <p class="paragraph_large margin-bottom_none">Please provide your information to continue with your
+                    selected themes.</p>
             </div>
-            
+
             <div class="form-container">
                 <form id="userForm" class="user-form" action="https://formspree.io/f/mzzawbjd" method="POST">
                     <div class="form-group">
                         <label for="userName" class="form-label">Full Name *</label>
                         <input type="text" id="userName" name="name" class="form-input" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="userEmail" class="form-label">Email Address *</label>
                         <input type="email" id="userEmail" name="email" class="form-input" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="userPhone" class="form-label">Phone Number *</label>
                         <input type="tel" id="userPhone" name="phone" class="form-input" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="userAge" class="form-label">Age *</label>
                         <input type="number" id="userAge" name="age" class="form-input" min="18" max="120" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="userComments" class="form-label">Additional Comments</label>
-                        <textarea id="userComments" name="comments" class="form-textarea" rows="4" placeholder="Tell us anything else you'd like us to know..."></textarea>
+                        <textarea id="userComments" name="comments" class="form-textarea" rows="4"
+                            placeholder="Tell us anything else you'd like us to know..."></textarea>
                     </div>
-                    
+
                     <!-- Hidden field to include selected themes -->
                     <input type="hidden" id="selectedThemesInput" name="selected_themes" value="">
-                    
+
                     <!-- Honeypot field for spam protection -->
                     <input type="text" name="_gotcha" style="display:none">
-                    
+
                     <div class="selected-themes-summary">
                         <h3 class="heading_h4">Your Selected Themes:</h3>
                         <ul id="selectedList" class="selected-themes-list"></ul>
                     </div>
                 </form>
             </div>
-            
+
             <div class="continue-wrapper">
                 <button id="backBtn" class="continue-btn secondary">← Back</button>
-                <button id="submitBtn" class="continue-btn" type="submit" form="userForm">Submit</button>
+                <button id="submitBtn" class="continue-btn" type="submit" form="userForm">Share Your Feedback</button>
             </div>
         </div>
     </section>
@@ -500,35 +502,42 @@
             }
             
             // Form submission logic
+            const submitBtn = document.getElementById('submitBtn');
+            const userForm = document.getElementById('userForm');
+            const selectedThemesInput = document.getElementById('selectedThemesInput');
+
             if (userForm && submitBtn) {
                 userForm.addEventListener('submit', (e) => {
                     // Update hidden field with selected themes before submission
                     const themes = window.selectedThemes || [];
                     selectedThemesInput.value = themes.join(', ');
-                    
+
                     // Show loading state
                     submitBtn.disabled = true;
                     submitBtn.textContent = 'Sending...';
-                    
+
                     // Remove any existing status messages
                     const existingStatus = document.querySelector('.form-status');
                     if (existingStatus) {
                         existingStatus.remove();
                     }
+
+                    // Let the form submit naturally to Formspree
+                    // The page will redirect or show Formspree's thank you page
                 });
-                
-                // Handle successful form submission
+
+                // Handle form response (if staying on same page)
                 window.addEventListener('load', () => {
                     const urlParams = new URLSearchParams(window.location.search);
                     if (urlParams.get('success') === 'true') {
                         showFormStatus('Thank you! Your information has been submitted successfully. We\'ll be in touch soon!', 'success');
-                        
+
                         // Reset form and return to step 1 after a delay
                         setTimeout(() => {
                             userForm.reset();
                             step2.classList.add('hidden');
                             step1.classList.remove('hidden');
-                            
+
                             // Clear selections
                             document.querySelectorAll('.theme-checkbox').forEach(cb => {
                                 cb.checked = false;
@@ -540,28 +549,46 @@
                     }
                 });
             }
-            
+
             function showFormStatus(message, type) {
                 const statusDiv = document.createElement('div');
                 statusDiv.className = `form-status ${type}`;
                 statusDiv.textContent = message;
-                
+
                 const formContainer = document.querySelector('.form-container');
-                if (formContainer) {
-                    formContainer.appendChild(statusDiv);
-                }
-                
+                formContainer.appendChild(statusDiv);
+
                 // Re-enable submit button
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.textContent = 'Submit';
                 }
             }
-            
+
             // Handle form errors
-            if (userForm) {
-                userForm.addEventListener('error', () => {
-                    showFormStatus('There was an error submitting your form. Please try again.', 'error');
+            userForm.addEventListener('error', () => {
+                showFormStatus('There was an error submitting your form. Please try again.', 'error');
+            });
+
+            // Reset button state if user goes back
+            const backBtn = document.getElementById('backBtn');
+            if (backBtn) {
+                backBtn.addEventListener('click', () => {
+                    step2.classList.add('hidden');
+                    step1.classList.remove('hidden');
+                });
+
+                backBtn.addEventListener('click', () => {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit';
+                    }
+
+                    // Remove status messages
+                    const existingStatus = document.querySelector('.form-status');
+                    if (existingStatus) {
+                        existingStatus.remove();
+                    }
                 });
             }
 

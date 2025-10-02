@@ -226,14 +226,11 @@ body {
 
 .carousel_track {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 85%;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  padding: 6px 4px 18px;
+  overflow: visible;
+  scroll-snap-type: none;
+  padding: 0;
 }
 
 .carousel_track::-webkit-scrollbar {
@@ -258,19 +255,19 @@ body {
 
 @media (min-width: 640px) {
   .carousel_track {
-    grid-auto-columns: 60%;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
 }
 
 @media (min-width: 900px) {
   .carousel_track {
-    grid-auto-columns: 47%;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
 }
 
 @media (min-width: 1200px) {
   .carousel_track {
-    grid-auto-columns: 48%;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -329,6 +326,7 @@ body {
 
 .header.is-align-center {
   text-align: center;
+  padding: 0 24px 40px 24px;
 }
 
 .continue-wrapper {
@@ -347,6 +345,12 @@ body {
   cursor: pointer;
   box-shadow: var(--shadow-2);
   transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.continue-btn.secondary {
+  background-color: #e9e9e9ca;
+  color: var(--accent-text);
+  box-shadow: var(--shadow-2);
 }
 
 .continue-btn:hover {
@@ -572,9 +576,6 @@ body.modal_open {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.form-input:invalid {
-  border-color: #ef4444;
-}
 
 .form-textarea {
   resize: vertical;
