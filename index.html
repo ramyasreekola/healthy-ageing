@@ -29,7 +29,7 @@
                                 d="M28,0H5C2.24,0,0,2.24,0,5v23c0,2.76,2.24,5,5,5h23c2.76,0,5-2.24,5-5V5c0-2.76-2.24-5-5-5ZM29,17c-6.63,0-12,5.37-12,12h-1c0-6.63-5.37-12-12-12v-1c6.63,0,12-5.37,12-12h1c0,6.63,5.37,12,12,12v1Z"
                                 fill="currentColor"></path>
                         </svg></div>
-                    <div class="paragraph_large margin-bottom_none" style="font-weight:700">Outlive</div>
+                    <div class="nav_logo-text">Outlive</div>
                 </a></div>
             <div class="nav_right">
                 <a href="#" class="button">English</a>
@@ -37,13 +37,16 @@
         </div>
     </div>
 
-    <header class="section">
+    <header id="heroSection" class="section">
         <div class="container">
             <div class="hero-header">
-                <h1 class="hero-title">We are Team Graceful Ageing</h1>
-                <p class="hero-desc">We are on a mission to make Graceful Ageing a reality for everyone. We would like
-                    to help us start this journey. Select from a variety of themes we have curated. Click any card to
-                    preview the theme and subthemes, you can choose multiple options, and continue to the survey.</p>
+                <h1 class="hero-title">Are you a woman post-menopause?</h1>
+
+                <div class="hero-content">
+                    <p class="hero-desc">We'd love to listen to your story and learn from your experience. We are on a mission to make Graceful Aging a reality for every woman, and this is a safe, welcoming space for you to explore what truly matters to you in this stage of life — from health and wellbeing to purpose, relationships, and self-discovery.</p>
+
+                    <p class="hero-desc"><strong>🌿 This short reflection takes just 3–5 minutes.</strong> Simply browse the theme cards below, select what resonates with you (one, several, or all), and share a few thoughts about your values and dreams for the future. Click any card to preview its meaning first.</p>
+                </div>
             </div>
         </div>
     </header>
@@ -244,38 +247,105 @@
     <!-- Step 2: Summary -->
     <section id="step2" class="section hidden">
         <div class="container">
-            <div class="header is-align-center">
-                <h2 class="heading_h2">Tell us about yourself</h2>
-                <p class="paragraph_large margin-bottom_none">Please provide your information to continue with your
-                    selected themes.</p>
+            <div class="step2-intro">
+                <p class="step2-desc">You can remain anonymous or share your contact details — it's entirely up to you. Your voice and perspective help shape better support and understanding for women navigating post-menopause wellness and graceful aging. <strong>💗 A huge thanks for being part of this journey.</strong> Together, let's redefine what it means to age — gracefully, joyfully, and on your own terms.</p>
             </div>
 
             <div class="form-container">
                 <form id="userForm" class="user-form" action="https://formspree.io/f/mzzawbjd" method="POST">
-                    <div class="form-group">
-                        <label for="userName" class="form-label">Full Name *</label>
-                        <input type="text" id="userName" name="name" class="form-input" required>
+
+                    <!-- Personal Information Section -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Personal Information (Optional)</h3>
+
+                        <div class="form-group">
+                            <label for="userName" class="form-label">Name</label>
+                            <input type="text" id="userName" name="name" class="form-input" placeholder="Enter your name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userEmail" class="form-label">Email</label>
+                            <input type="email" id="userEmail" name="email" class="form-input" placeholder="Enter your email address">
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="userEmail" class="form-label">Email Address *</label>
-                        <input type="email" id="userEmail" name="email" class="form-input" required>
+                    <!-- Age Group Section -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Age Group</h3>
+                        <p class="form-section-subtitle">Select one:</p>
+
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="age_group" value="Below 50" class="radio-input" required>
+                                <span class="radio-text">Below 50</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="age_group" value="51–55" class="radio-input" required>
+                                <span class="radio-text">51–55</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="age_group" value="56–60" class="radio-input" required>
+                                <span class="radio-text">56–60</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="age_group" value="61–65" class="radio-input" required>
+                                <span class="radio-text">61–65</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="age_group" value="66–70" class="radio-input" required>
+                                <span class="radio-text">66–70</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="age_group" value="71–75" class="radio-input" required>
+                                <span class="radio-text">71–75</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="age_group" value="75+" class="radio-input" required>
+                                <span class="radio-text">75+</span>
+                            </label>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="userPhone" class="form-label">Phone Number *</label>
-                        <input type="tel" id="userPhone" name="phone" class="form-input" required>
+                    <!-- Time Since Post-Menopause Section -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Time Since Post-Menopause Started</h3>
+
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="menopause_timeline" value="0–5 years ago" class="radio-input" required>
+                                <span class="radio-text">0–5 years ago</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="menopause_timeline" value="5–10 years ago" class="radio-input" required>
+                                <span class="radio-text">5–10 years ago</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="menopause_timeline" value="More than 10 years ago" class="radio-input" required>
+                                <span class="radio-text">More than 10 years ago</span>
+                            </label>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="userAge" class="form-label">Age *</label>
-                        <input type="number" id="userAge" name="age" class="form-input" min="18" max="120" required>
+                    <!-- Selected Themes Summary -->
+                    <div class="selected-themes-summary">
+                        <h3 class="heading_h4">Your Selected Themes:</h3>
+                        <ul id="selectedList" class="selected-themes-list"></ul>
                     </div>
 
-                    <div class="form-group">
-                        <label for="userComments" class="form-label">Additional Comments</label>
-                        <textarea id="userComments" name="comments" class="form-textarea" rows="4"
-                            placeholder="Tell us anything else you'd like us to know..."></textarea>
+                    <!-- Consent Section -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">Consent</h3>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="consent_contact" value="yes" class="checkbox-input">
+                            <span class="checkbox-text">I am consenting to be contacted for further research opportunities.</span>
+                        </label>
+                    </div>
+
+                    <!-- Data Protection Notice -->
+                    <div class="data-protection-notice">
+                        <h4 class="notice-title">Data Protection Notice</h4>
+                        <p class="notice-text">We are fully GDPR compliant. All data collected in this study will be stored securely and deleted after the study concludes, unless you have provided explicit consent to be contacted for further research.</p>
                     </div>
 
                     <!-- Hidden field to include selected themes -->
@@ -283,17 +353,12 @@
 
                     <!-- Honeypot field for spam protection -->
                     <input type="text" name="_gotcha" style="display:none">
-
-                    <div class="selected-themes-summary">
-                        <h3 class="heading_h4">Your Selected Themes:</h3>
-                        <ul id="selectedList" class="selected-themes-list"></ul>
-                    </div>
                 </form>
             </div>
 
             <div class="continue-wrapper">
                 <button id="backBtn" class="continue-btn secondary">← Back</button>
-                <button id="submitBtn" class="continue-btn" type="submit" form="userForm">Share Your Feedback</button>
+                <button id="submitBtn" class="continue-btn" type="submit" form="userForm">Submit</button>
             </div>
         </div>
     </section>
@@ -418,6 +483,7 @@
             const selectedList = document.getElementById('selectedList');
             const step1 = document.getElementById('step1');
             const step2 = document.getElementById('step2');
+            const heroSection = document.getElementById('heroSection');
 
             function getSelectedThemes() {
                 return Array.from(document.querySelectorAll('.theme-checkbox:checked'))
@@ -461,7 +527,8 @@
                 const themes = getSelectedThemes();
                 if (themes.length === 0) return;
 
-                // Show step 2
+                // Hide hero section and step 1, show step 2
+                heroSection.classList.add('hidden');
                 step1.classList.add('hidden');
                 step2.classList.remove('hidden');
 
@@ -474,7 +541,7 @@
                         selectedList.appendChild(li);
                     });
                 }
-                
+
                 // Store selected themes for form submission
                 window.selectedThemes = themes;
             });
@@ -482,15 +549,17 @@
             // Back button functionality
             if (backBtn) {
                 backBtn.addEventListener('click', () => {
+                    // Show hero section and step 1, hide step 2
+                    heroSection.classList.remove('hidden');
                     step2.classList.add('hidden');
                     step1.classList.remove('hidden');
-                    
+
                     // Reset submit button state
                     if (submitBtn) {
                         submitBtn.disabled = false;
                         submitBtn.textContent = 'Submit';
                     }
-                    
+
                     // Remove status messages
                     const existingStatus = document.querySelector('.form-status');
                     if (existingStatus) {
@@ -568,27 +637,7 @@
                 showFormStatus('There was an error submitting your form. Please try again.', 'error');
             });
 
-            // Reset button state if user goes back
-            const backBtn = document.getElementById('backBtn');
-            if (backBtn) {
-                backBtn.addEventListener('click', () => {
-                    step2.classList.add('hidden');
-                    step1.classList.remove('hidden');
-                });
-
-                backBtn.addEventListener('click', () => {
-                    if (submitBtn) {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'Submit';
-                    }
-
-                    // Remove status messages
-                    const existingStatus = document.querySelector('.form-status');
-                    if (existingStatus) {
-                        existingStatus.remove();
-                    }
-                });
-            }
+            // Note: Back button functionality is already handled above (line 515-535)
 
             // Initialize the Continue button state
             updateContinueState();
